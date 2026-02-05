@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { AnimatePresence } from 'framer-motion';
-import { fetchCoins, CoinData } from './api';
+import type { CoinData } from './api';
+import { fetchCoins } from './api';
 import { BubbleMap } from './components/BubbleMap';
 import { CoinDetails } from './components/CoinDetails';
+import { AnimatePresence } from 'framer-motion';
 import { RefreshCw } from 'lucide-react';
 
 function App() {

@@ -1,4 +1,4 @@
-import { CoinData } from '../api';
+import type { CoinData } from '../api';
 import { motion } from 'framer-motion';
 import { X, TrendingUp, DollarSign, Activity } from 'lucide-react';
 

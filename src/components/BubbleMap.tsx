@@ -1,5 +1,5 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { CoinData } from '../api';
+import type { CoinData } from '../api';
+import { motion } from 'framer-motion';
 
 interface BubbleMapProps {
   coins: CoinData[];
