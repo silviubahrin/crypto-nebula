@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Home, PieChart, Settings, Bell } from 'lucide-react';
+import { Home, PieChart, Settings, Bell, Orbit } from 'lucide-react';
 
 interface SidebarProps {
   activeTab: string;
@@ -22,7 +22,9 @@ export const Sidebar = ({ activeTab, onTabChange }: SidebarProps) => {
     >
       {/* Logo Area */}
       <div className="p-8 flex items-center justify-center lg:justify-start gap-3">
-        <img src="/logo.png" alt="Nebula Logo" className="w-10 h-10 rounded-lg object-cover shadow-lg shadow-orange-500/20" />
+        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-nebula-orange to-nebula-amber flex items-center justify-center shadow-lg shadow-orange-500/20 group">
+          <Orbit size={22} className="text-white group-hover:rotate-180 transition-transform duration-700 ease-in-out" strokeWidth={2.5} />
+        </div>
         <span className="hidden lg:block font-bold text-xl tracking-tighter">NEBULA</span>
       </div>
 
