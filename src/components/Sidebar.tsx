@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Home, PieChart, Settings, Search, Bell, Menu } from 'lucide-react';
+import { Home, PieChart, Settings, Bell } from 'lucide-react';
 
 export const Sidebar = () => {
   const menuItems = [
