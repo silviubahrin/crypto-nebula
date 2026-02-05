@@ -3,8 +3,10 @@ import type { CoinData } from './api';
 import { fetchCoins } from './api';
 import { BubbleMap } from './components/BubbleMap';
 import { CoinDetails } from './components/CoinDetails';
+import { Sidebar } from './components/Sidebar';
 import { AnimatePresence } from 'framer-motion';
-import { RefreshCw } from 'lucide-react';
+import { RefreshCw, Search } from 'lucide-react';
+import { APP_VERSION, BUILD_ID } from './version';
 
 function App() {
   const [coins, setCoins] = useState<CoinData[]>([]);
@@ -13,12 +15,9 @@ function App() {
 
   const loadData = async () => {
     setLoading(true);
-    // Simulate network delay for effect
-    setTimeout(async () => {
-      const data = await fetchCoins();
-      setCoins(data);
-      setLoading(false);
-    }, 1500);
+    const data = await fetchCoins();
+    setCoins(data);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -26,7 +25,7 @@ function App() {
   }, []);
 
   return (
-    <div className="relative w-screen h-screen bg-deep-space overflow-hidden font-sans selection:bg-nebula-purple selection:text-white">
+    <div className="relative w-screen h-screen bg-deep-space overflow-hidden font-sans selection:bg-nebula-purple selection:text-white flex">
       
       {/* Background Ambience */}
       <div className="absolute inset-0 pointer-events-none">
@@ -34,33 +33,41 @@ function App() {
         <div className="absolute bottom-[-20%] right-[-10%] w-[60vw] h-[60vw] bg-nebula-blue/10 rounded-full blur-[150px] animate-pulse-slow" style={{ animationDelay: '1s' }} />
       </div>
 
-      {/* Header UI */}
-      <header className="absolute top-0 left-0 w-full p-6 z-40 flex justify-between items-center pointer-events-none">
-        <div className="pointer-events-auto">
-          <h1 className="text-3xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white to-white/50 drop-shadow-lg">
-            CRYPTO NEBULA
-          </h1>
-          <p className="text-xs font-mono text-white/40 tracking-[0.2em] mt-1">REALTIME MARKET VISUALIZER</p>
-        </div>
-        
-        <button 
-          onClick={loadData}
-          className={`pointer-events-auto glass-panel p-3 rounded-full text-white/70 hover:text-white transition-all hover:bg-white/10 hover:scale-105 active:scale-95 ${loading ? 'animate-spin' : ''}`}
-        >
-          <RefreshCw size={20} />
-        </button>
-      </header>
+      {/* Sidebar Dashboard */}
+      <Sidebar />
 
-      {/* Main Content */}
-      <main className="w-full h-full relative z-10">
-        {loading && coins.length === 0 ? (
-          <div className="absolute inset-0 flex items-center justify-center">
-             <div className="text-2xl font-mono animate-pulse text-white/50 tracking-widest">INITIALIZING...</div>
+      {/* Main Content Area */}
+      <div className="flex-1 relative flex flex-col h-full">
+        {/* Header UI */}
+        <header className="w-full p-8 z-40 flex justify-between items-center">
+          <div className="flex items-center gap-4 bg-white/5 backdrop-blur-md rounded-full px-6 py-3 border border-white/10 w-full max-w-md">
+             <Search size={18} className="text-white/40" />
+             <input 
+               type="text" 
+               placeholder="Search assets..." 
+               className="bg-transparent border-none outline-none text-white placeholder-white/40 w-full font-mono text-sm"
+             />
           </div>
-        ) : (
-          <BubbleMap coins={coins} onSelect={setSelectedCoin} />
-        )}
-      </main>
+          
+          <button 
+            onClick={loadData}
+            className={`glass-panel p-3 rounded-full text-white/70 hover:text-white transition-all hover:bg-white/10 hover:scale-105 active:scale-95 ${loading ? 'animate-spin' : ''}`}
+          >
+            <RefreshCw size={20} />
+          </button>
+        </header>
+
+        {/* Bubble Map Area */}
+        <main className="flex-1 relative z-10">
+          {loading && coins.length === 0 ? (
+            <div className="absolute inset-0 flex items-center justify-center">
+               <div className="text-2xl font-mono animate-pulse text-white/50 tracking-widest">INITIALIZING LINK...</div>
+            </div>
+          ) : (
+            <BubbleMap coins={coins} onSelect={setSelectedCoin} />
+          )}
+        </main>
+      </div>
 
       {/* Overlay */}
       <AnimatePresence>
@@ -70,8 +77,8 @@ function App() {
       </AnimatePresence>
       
       {/* Footer / Status */}
-      <div className="absolute bottom-6 left-6 text-xs font-mono text-white/20 pointer-events-none">
-        v2.0.26 // BLEEDING_EDGE_BUILD
+      <div className="absolute bottom-6 right-6 text-xs font-mono text-white/20 pointer-events-none">
+        v{APP_VERSION} [{BUILD_ID}]
       </div>
     </div>
   );
