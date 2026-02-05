@@ -22,7 +22,7 @@ export const Sidebar = ({ activeTab, onTabChange }: SidebarProps) => {
     >
       {/* Logo Area */}
       <div className="p-8 flex items-center justify-center lg:justify-start gap-3">
-        <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-orange-500 to-amber-500 animate-pulse" />
+        <img src="/logo.png" alt="Nebula Logo" className="w-10 h-10 rounded-lg object-cover shadow-lg shadow-orange-500/20" />
         <span className="hidden lg:block font-bold text-xl tracking-tighter">NEBULA</span>
       </div>
 
